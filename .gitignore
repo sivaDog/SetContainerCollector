@@ -1,0 +1,12 @@
+# Packaged releases (create locally for ESOUI upload)
+*.zip
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+**/desktop.ini
+
+# Editor
+*.swp
+*~
