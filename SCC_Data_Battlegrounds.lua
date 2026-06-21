@@ -8,11 +8,11 @@ local BG_SETS = { 326, 327, 328, 329 }
 
 local WEAPONS = {
   { 126093, "Unknown Battleground Axe", WEAPONTYPE_AXE, EQUIP_TYPE_ONE_HAND },
-  { 126094, "Unknown Battleground Maul", WEAPONTYPE_HAMMER, EQUIP_TYPE_TWO_HAND },
+  { 126094, "Unknown Battleground Maul", WEAPONTYPE_TWO_HANDED_HAMMER, nil },
   { 126095, "Unknown Battleground Sword", WEAPONTYPE_SWORD, EQUIP_TYPE_ONE_HAND },
-  { 126096, "Unknown Battleground Battleaxe", WEAPONTYPE_AXE, EQUIP_TYPE_TWO_HAND },
+  { 126096, "Unknown Battleground Battleaxe", WEAPONTYPE_TWO_HANDED_AXE, nil },
   { 126097, "Unknown Battleground Mace", WEAPONTYPE_HAMMER, EQUIP_TYPE_ONE_HAND },
-  { 126098, "Unknown Battleground Greatsword", WEAPONTYPE_SWORD, EQUIP_TYPE_TWO_HAND },
+  { 126098, "Unknown Battleground Greatsword", WEAPONTYPE_TWO_HANDED_SWORD, nil },
   { 126099, "Unknown Battleground Dagger", WEAPONTYPE_DAGGER, nil },
   { 126100, "Unknown Battleground Bow", WEAPONTYPE_BOW, nil },
   { 126101, "Unknown Battleground Inferno Staff", WEAPONTYPE_FIRE_STAFF, nil },

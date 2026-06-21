@@ -6,23 +6,12 @@ Hover a supported container in a vendor window, inventory, mail, or trade UI and
 
 ## Screenshots
 
-### Cyrodiil — AP Elite Gear Vendor
+Three examples across different vendors — complete (`6/6`), in progress with auto-detection, and not yet collected (`0/22`):
 
-Registered vendor boxes show collection progress. Unregistered single-set boxes can show an auto-detected set name.
-
-![Cyrodiil AP Elite Gear Vendor tooltip showing Collected progress and auto-detected set name](image/cyrodiil-vendor.png)
-
-### Undaunted — Curated Coffer
-
-Curated dungeon coffers track shoulder pieces across both sets in the coffer (e.g. `6/6` when complete).
-
-![Undaunted curated coffer tooltip showing Collected 6/6](image/undaunted-coffer.png)
-
-### Battlegrounds — Weapon Containers
-
-Battleground weapon boxes filter progress by weapon type (shown here: `0/0` when no matching pieces apply to that weapon slot).
-
-![Battlegrounds weapon container tooltip showing Collected progress](image/battlegrounds-weapons.png)
+| Cyrodiil — AP Elite Gear Vendor | Undaunted — Curated Coffer | Imperial City — Tel Var Vendor |
+|:---:|:---:|:---:|
+| ![Cyrodiil AP Elite Gear Vendor tooltip showing Collected 20/22 and auto-detected set name](image/cyrodiil-vendor.png) | ![Undaunted curated coffer tooltip showing Collected 6/6](image/undaunted-coffer.png) | ![Imperial City Tel Var vendor tooltip showing Collected 0/22](image/imperial-city-vendor.png) |
+| Partial progress on a registered vendor box (`20/22`). An unregistered single-set box shows the auto-detected set name (e.g. Arkay's Charity). | Shoulder pieces from both sets in the coffer, fully collected (`6/6`). | Tel Var curated gear box with no pieces collected yet (`0/22`). |
 
 ## Requirements
 
