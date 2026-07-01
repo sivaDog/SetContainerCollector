@@ -3,51 +3,30 @@
 
 from __future__ import annotations
 
-import re
 import sys
 import zipfile
 from pathlib import Path
 
-REPO_ROOT = Path(__file__).resolve().parent.parent
-ADDON_NAME = "SetContainerCollector"
-MANIFEST = REPO_ROOT / f"{ADDON_NAME}.txt"
+SCRIPT_DIR = Path(__file__).resolve().parent
+if str(SCRIPT_DIR) not in sys.path:
+    sys.path.insert(0, str(SCRIPT_DIR))
 
-EXCLUDE_DIRS = {".git", "image", "scripts", "docs"}
-EXCLUDE_FILES = {".gitignore", "LICENSE", "desktop.ini"}
-EXCLUDE_SUFFIXES = {".md", ".zip"}
+import packaging
 
-
-def read_version() -> str:
-    text = MANIFEST.read_text(encoding="utf-8")
-    match = re.search(r"^## Version:\s*(.+)$", text, re.MULTILINE)
-    if not match:
-        raise SystemExit(f"Could not read version from {MANIFEST}")
-    return match.group(1).strip()
-
-
-def should_include(path: Path) -> bool:
-    rel = path.relative_to(REPO_ROOT)
-    if any(part in EXCLUDE_DIRS for part in rel.parts):
-        return False
-    if path.name in EXCLUDE_FILES:
-        return False
-    if path.suffix.lower() in EXCLUDE_SUFFIXES:
-        return False
-    return True
+REPO_ROOT = packaging.repo_root()
 
 
 def make_zip(version: str) -> Path:
-    output = REPO_ROOT / f"{ADDON_NAME}-{version}.zip"
+    output = REPO_ROOT / f"{packaging.ADDON_NAME}-{version}.zip"
     with zipfile.ZipFile(output, "w", zipfile.ZIP_DEFLATED) as zf:
-        for path in sorted(REPO_ROOT.rglob("*")):
-            if path.is_file() and should_include(path):
-                arcname = Path(ADDON_NAME) / path.relative_to(REPO_ROOT)
-                zf.write(path, arcname.as_posix())
+        for path in packaging.iter_packaged_files(REPO_ROOT):
+            arcname = Path(packaging.ADDON_NAME) / path.relative_to(REPO_ROOT)
+            zf.write(path, arcname.as_posix())
     return output
 
 
 def main() -> int:
-    version = read_version()
+    version = packaging.read_version(REPO_ROOT)
     output = make_zip(version)
     print(f"Created {output} ({output.stat().st_size} bytes)")
     with zipfile.ZipFile(output) as zf:
