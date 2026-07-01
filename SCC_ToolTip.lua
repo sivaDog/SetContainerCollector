@@ -16,31 +16,70 @@ local function GetLineFormat(size)
   return string.format("$(%s)|$(KB_%s)|%s", FONT_STYLE, size, FONT_WEIGHT)
 end
 
+local function IsGamepadTooltip(tooltipControl)
+  return tooltipControl.GetStyle ~= nil
+end
+
 local function GetEquipSlotHintText(equipSlot)
   if equipSlot == EQUIP_TYPE_HEAD then
-    return SCC.Strings.tooltipAutoResolvedSlotHead
+    return GetString(SI_SCC_TOOLTIP_AUTO_RESOLVED_SLOT_HEAD)
   end
   if equipSlot == EQUIP_TYPE_SHOULDERS then
-    return SCC.Strings.tooltipAutoResolvedSlotShoulders
+    return GetString(SI_SCC_TOOLTIP_AUTO_RESOLVED_SLOT_SHOULDERS)
   end
   return nil
 end
 
-local function AppendAutoResolvedHint(tooltipControl, containerDef, fontSize)
-  if not containerDef.autoResolved then return end
+local function BuildAutoResolvedHintText(containerDef)
+  if not containerDef.autoResolved then return nil end
 
-  local hintSize = zo_clamp(fontSize - 2, 12, fontSize)
   local hintColor = SCC.savedVariables.colorUnknown or SCC.defaultSetting.colorUnknown
   local setLabel = containerDef.label or GetItemSetName(containerDef.setId)
   local slotHint = containerDef.inferredEquipSlot and GetEquipSlotHintText(containerDef.equipSlot) or nil
   local hintText = slotHint
-    and zo_strformat(SCC.Strings.tooltipAutoResolvedWithSlot, setLabel, slotHint)
-    or zo_strformat(SCC.Strings.tooltipAutoResolved, setLabel)
+    and zo_strformat(GetString(SI_SCC_TOOLTIP_AUTO_RESOLVED_WITH_SLOT), setLabel, slotHint)
+    or zo_strformat(GetString(SI_SCC_TOOLTIP_AUTO_RESOLVED), setLabel)
 
-  tooltipControl:AddLine(
-    string.format("|c%06X%s|r", hintColor, hintText),
-    GetLineFormat(hintSize)
-  )
+  return string.format("|c%06X%s|r", hintColor, hintText)
+end
+
+local function AppendAutoResolvedHintKeyboard(tooltipControl, containerDef, fontSize)
+  local hintText = BuildAutoResolvedHintText(containerDef)
+  if not hintText then return end
+
+  local hintSize = zo_clamp(fontSize - 2, 12, fontSize)
+  tooltipControl:AddLine(hintText, GetLineFormat(hintSize))
+end
+
+local function AppendContainerTooltipKeyboard(tooltipControl, containerDef, summary)
+  local fontSize = GetTooltipFontSize()
+
+  ZO_Tooltip_AddDivider(tooltipControl)
+
+  if not summary then
+    tooltipControl:AddLine(GetString(SI_SCC_TOOLTIP_NO_DATA), GetLineFormat(fontSize))
+    return
+  end
+
+  tooltipControl:AddLine(SCC.FormatProgressText(summary.known, summary.total), GetLineFormat(fontSize))
+  AppendAutoResolvedHintKeyboard(tooltipControl, containerDef, fontSize)
+end
+
+local function AppendContainerTooltipGamepad(tooltipControl, containerDef, summary)
+  local section = tooltipControl:AcquireSection(tooltipControl:GetStyle("bodySection"))
+  local bodyStyle = tooltipControl:GetStyle("bodyDescription")
+
+  if not summary then
+    section:AddLine(GetString(SI_SCC_TOOLTIP_NO_DATA), bodyStyle)
+  else
+    section:AddLine(SCC.FormatProgressText(summary.known, summary.total), bodyStyle)
+    local hintText = BuildAutoResolvedHintText(containerDef)
+    if hintText then
+      section:AddLine(hintText, bodyStyle)
+    end
+  end
+
+  tooltipControl:AddSection(section)
 end
 
 local function AppendContainerTooltip(tooltipControl, itemLink)
@@ -49,17 +88,12 @@ local function AppendContainerTooltip(tooltipControl, itemLink)
   if not containerDef then return end
 
   local summary = SCC.GetContainerCollectionSummary(containerDef)
-  local fontSize = GetTooltipFontSize()
 
-  ZO_Tooltip_AddDivider(tooltipControl)
-
-  if not summary then
-    tooltipControl:AddLine(SCC.Strings.tooltipNoData, GetLineFormat(fontSize))
-    return
+  if IsGamepadTooltip(tooltipControl) then
+    AppendContainerTooltipGamepad(tooltipControl, containerDef, summary)
+  else
+    AppendContainerTooltipKeyboard(tooltipControl, containerDef, summary)
   end
-
-  tooltipControl:AddLine(SCC.FormatProgressText(summary.known, summary.total), GetLineFormat(fontSize))
-  AppendAutoResolvedHint(tooltipControl, containerDef, fontSize)
 end
 
 local function TooltipHook(tooltipControl, method, linkFunc)

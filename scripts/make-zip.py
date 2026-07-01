@@ -10,9 +10,9 @@ from pathlib import Path
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
 ADDON_NAME = "SetContainerCollector"
-MANIFEST = REPO_ROOT / f"{ADDON_NAME}.addon"
+MANIFEST = REPO_ROOT / f"{ADDON_NAME}.txt"
 
-EXCLUDE_DIRS = {".git", "image", "scripts"}
+EXCLUDE_DIRS = {".git", "image", "scripts", "docs"}
 EXCLUDE_FILES = {".gitignore", "LICENSE", "desktop.ini"}
 EXCLUDE_SUFFIXES = {".md", ".zip"}
 

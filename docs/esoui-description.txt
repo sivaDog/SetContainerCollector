@@ -1,0 +1,57 @@
+[b]Set Container Collector[/b] (v1.0.1)
+
+Shows [b]account-wide set collection progress[/b] on tooltips for equipment containers — coffers, lockboxes, unidentified gear boxes, zone bags, and similar items.
+
+Hover a supported container in a vendor window, inventory, mail, trade UI, or [b]gamepad tooltips on PC[/b] and see how many relevant set pieces you have already collected, for example [b]Collected: 2/3[/b] on a monster shoulder coffer or [b]Collected: 6/6[/b] when a curated coffer is complete.
+
+[b]Features[/b]
+[list]
+[*]Progress line on container tooltips ([b]Collected: X/Y[/b])
+[*]Registered vendor boxes, coffers, and weapon containers across Cyrodiil, Imperial City, Undaunted, Battlegrounds, and regional vendors
+[*]LibSets pool support (AP elite, Tel Var lockbox, Cyrodiil quartermasters, Mystery Coffers, and more)
+[*][b]Auto-detect unregistered containers[/b] (default: on) — resolves single-set boxes via the game's container set API and shows the set name when applicable
+[*]Color-coded progress: none collected, partial, and complete
+[*][b]Gamepad / controller UI on PC[/b] — tooltips use ZO gamepad styles
+[*]Settings panel (LibAddonMenu-2.0): auto-detect toggle, tooltip font size (keyboard UI only)
+[*]Japanese UI strings when the game client language is Japanese
+[/list]
+
+[b]Supported containers[/b]
+[list]
+[*][b]Cyrodiil[/b] — AP Elite Gear Vendor boxes; monster elite mask/shoulder containers (sets 711–713)
+[*][b]Imperial City[/b] — Tel Var Armorer / Grand Armorer gear boxes; curated monster shoulder coffers
+[*][b]Undaunted[/b] — Curated dungeon coffers; Maj / Glirion / Urgarlag Mystery Coffers
+[*][b]Battlegrounds[/b] — Gladiator's Quarters weapon containers (filtered by weapon type)
+[*][b]Regional vendors[/b] — Cyrodiil base camp zone bags (Alik'r, Auridon, … Craglorn)
+[/list]
+
+[b]Platform[/b]
+[list]
+[*][b]PC[/b] — keyboard and mouse, and gamepad / controller UI
+[*][b]Xbox / PlayStation[/b] — not supported (.txt manifest)
+[/list]
+
+[b]Dependencies[/b]
+[list]
+[*][b]Required:[/b] [url=https://www.esoui.com/downloads/info2241-LibSets.html]LibSets[/url] (>=9020), [url=https://www.esoui.com/downloads/info7-LibAddonMenu.html]LibAddonMenu-2.0[/url] (>=43)
+[*][b]Optional:[/b] [url=https://www.esoui.com/downloads/info695-AwesomeGuildStore.html]AwesomeGuildStore[/url] (>=3282, trading house hook timing)
+[/list]
+
+[b]Settings[/b]
+Settings → Add-ons → Set Container Collector
+[list]
+[*]Auto-detect unregistered containers
+[*]Tooltip font size (12–28, keyboard UI only)
+[/list]
+
+[b]Slash commands[/b] (keyboard UI only)
+[list]
+[*]/scc pool [i]poolKey[/i] — print pool progress in chat (e.g. maj_mystery, ap_elite, battleground_merchant, telvar)
+[*]/scc debuglink [i]itemLink[/i] — inspect how a container link is resolved
+[*]/scc — show usage
+[/list]
+
+[b]Source and issues[/b]
+[url=https://github.com/sivaDog/SetContainerCollector]GitHub repository[/url]
+
+[i]This Add-on is not created by, affiliated with or sponsored by ZeniMax Media Inc. or its affiliates.[/i]

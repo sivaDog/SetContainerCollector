@@ -183,7 +183,7 @@ local function GetProgressColor(known, total)
 end
 
 function SCC.FormatProgressText(known, total)
-  local progress = zo_strformat(SCC.Strings.tooltipProgress, known, total)
+  local progress = zo_strformat(GetString(SI_SCC_TOOLTIP_PROGRESS), known, total)
   return string.format("|c%06X%s|r", GetProgressColor(known, total), progress)
 end
 
@@ -354,10 +354,10 @@ end
 function SCC.PrintPoolSummary(poolKey)
   local summary = SCC.GetPoolCollectionSummary(poolKey)
   if not summary then
-    d(zo_strformat(SCC.Strings.slashPoolUnknown, poolKey))
+    d(zo_strformat(GetString(SI_SCC_SLASH_POOL_UNKNOWN), poolKey))
     return
   end
-  d(zo_strformat(SCC.Strings.slashPoolResult, summary.label, summary.known, summary.total))
+  d(zo_strformat(GetString(SI_SCC_SLASH_POOL_RESULT), summary.label, summary.known, summary.total))
 end
 
 function SCC.DebugItemLink(itemLink)

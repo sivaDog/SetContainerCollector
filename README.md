@@ -2,7 +2,7 @@
 
 Shows **account-wide set collection progress** on tooltips for equipment containers (coffers, lockboxes, unidentified gear boxes, zone bags, and similar items).
 
-Hover a supported container in a vendor window, inventory, mail, or trade UI and see how many relevant set pieces you already have collected — for example `Collected: 2/3` for a monster shoulder coffer.
+Hover a supported container in a vendor window, inventory, mail, trade UI, or gamepad tooltips on PC and see how many relevant set pieces you already have collected — for example `Collected: 2/3` for a monster shoulder coffer.
 
 ## Screenshots
 
@@ -15,20 +15,28 @@ Three examples across different vendors — complete (`6/6`), in progress with a
 
 ## Requirements
 
-| Add-on | Required |
-|--------|----------|
-| [LibSets](https://www.esoui.com/downloads/info2241-LibSets.html) | Yes |
-| [LibAddonMenu-2.0](https://www.esoui.com/downloads/info7-LibAddonMenu.html) | Yes |
-| [LibSlashCommander](https://www.esoui.com/downloads/info3317-LibSlashCommander.html) | Optional (slash command registration) |
-| [AwesomeGuildStore](https://www.esoui.com/downloads/info695-AwesomeGuildStore.html) | Optional (trading house tooltips) |
+| Add-on | Required | Notes |
+|--------|----------|-------|
+| [LibSets](https://www.esoui.com/downloads/info2241-LibSets.html) | Yes (>=9020) | |
+| [LibAddonMenu-2.0](https://www.esoui.com/downloads/info7-LibAddonMenu.html) | Yes (>=43) | |
+| [AwesomeGuildStore](https://www.esoui.com/downloads/info695-AwesomeGuildStore.html) | Optional (>=3282) | Trading house tooltips |
+| [LibSlashCommander](https://www.esoui.com/downloads/info3317-LibSlashCommander.html) | Optional | Slash command registration if installed (not listed in manifest) |
+
+## Platform and UI
+
+| Platform | Support |
+|----------|---------|
+| PC — keyboard and mouse | Full (tooltips, settings, slash commands) |
+| PC — gamepad / controller UI | Tooltips supported (ZO `bodyDescription` styles; font size uses game defaults) |
+| Xbox / PlayStation | Not supported (`.txt` manifest; add-on does not load on console) |
 
 ## Installation
 
-1. Install dependencies (LibSets, LibAddonMenu-2.0).
+1. Install dependencies (LibSets >=9020, LibAddonMenu-2.0 >=43).
 2. Extract the `SetContainerCollector` folder into your `Documents/Elder Scrolls Online/live/AddOns/` directory.
 3. Enable the add-on on the character select screen.
 
-## Supported containers (v1.0.0)
+## Supported containers (v1.0.1)
 
 - **Cyrodiil** — AP Elite Gear Vendor boxes; monster elite mask/shoulder containers (sets 711–713)
 - **Imperial City** — Tel Var Armorer / Grand Armorer gear boxes and curated monster shoulder coffers
@@ -46,10 +54,9 @@ Unlisted **single-set** containers can still work when **Auto-detect unregistere
 | Option | Description |
 |--------|-------------|
 | Auto-detect unregistered containers | Resolve unknown set boxes via `GetItemLinkContainerSetInfo` |
-| Tooltip font size | Size of the progress line (12–28) |
+| Tooltip font size | Size of the progress line on keyboard UI (12–28); disabled in gamepad-preferred mode |
 
 ## Slash commands
-
 ```
 /scc pool <poolKey>       — print pool progress in chat
 /scc debuglink <itemLink> — inspect how a container link is resolved
@@ -60,8 +67,9 @@ Example pool keys: `maj_mystery`, `ap_elite`, `battleground_merchant`, `telvar`
 
 ## Localization
 
-- English (default)
-- Japanese (`language/ja.lua`, loaded when the client language is Japanese)
+- English (`lang/en.lua`)
+- Japanese (`lang/jp.lua`, loaded via `lang/$(language).lua` when the client language is Japanese)
+- UI strings use ZO `SI_SCC_*` constants (`GetString`)
 
 ## License
 
